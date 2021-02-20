@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"rais/src/cmd/rais-server/internal/servers"
 	"rais/src/iiif"
@@ -76,7 +77,12 @@ func main() {
 	address := viper.GetString("Address")
 	adminAddress := viper.GetString("AdminAddress")
 
-	Logger.Debugf("Serving images from %q", tilePath)
+	var forcedPrefix = os.Getenv("RAIS_FORCEDPREFIX")
+	if forcedPrefix != "" {
+		Logger.Debugf("Serving images with forced url prefix %q", forcedPrefix)
+	} else {
+		Logger.Debugf("Serving images from %q", tilePath)
+	}
 	ih := NewImageHandler(tilePath, webPath)
 	ih.Maximums.Area = viper.GetInt64("ImageMaxArea")
 	ih.Maximums.Width = viper.GetInt("ImageMaxWidth")

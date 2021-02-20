@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"io"
 	"io/ioutil"
 	"math"
@@ -243,6 +244,11 @@ func (ih *ImageHandler) getURL(id iiif.ID) *url.URL {
 
 	// Check for scheme mappings
 	var smPrefix = ih.schemeMap[u.Scheme]
+
+	var forcedPrefix = os.Getenv("RAIS_FORCEDPREFIX")
+	if forcedPrefix != "" {
+		smPrefix = forcedPrefix // "azblob://demo/" for example
+	}
 	if smPrefix != "" {
 		var val string
 		if u.Scheme == "" {
