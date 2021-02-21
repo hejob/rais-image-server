@@ -12,7 +12,7 @@ LABEL maintainer="Jeremy Echols <jechols@uoregon.edu>"
 
 # Install all the build dependencies
 RUN apt-get update -y && apt-get upgrade -y && \
-    apt-get install -y libopenjp2-7-dev libmagickcore-dev git gcc make tar findutils
+    apt-get install -y libopenjp2-7-dev libmagickcore-dev git gcc make tar findutils ca-certificates
 
 # Make sure the build box can lint code
 RUN go get -u golang.org/x/lint/golint
